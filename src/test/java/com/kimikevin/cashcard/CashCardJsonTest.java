@@ -37,16 +37,21 @@ class CashCardJsonTest {
     void cashCardSerializationTest() throws IOException {
         CashCard cashCard = cashCards[0];
 
-        assertThat(json.write(cashCard)).isStrictlyEqualToJson(new File("src/test/resources/single.json"));
+        assertThat(json.write(cashCard))
+                .isStrictlyEqualToJson(new File("src/test/resources/single.json"));
 
 
-        assertThat(json.write(cashCard)).hasJsonPathNumberValue("@.id");
+        assertThat(json.write(cashCard))
+                .hasJsonPathNumberValue("@.id");
 
-        assertThat(json.write(cashCard)).extractingJsonPathNumberValue("@.id").isEqualTo(99);
+        assertThat(json.write(cashCard))
+                .extractingJsonPathNumberValue("@.id").isEqualTo(99);
 
-        assertThat(json.write(cashCard)).hasJsonPathNumberValue("@.amount");
+        assertThat(json.write(cashCard))
+                .hasJsonPathNumberValue("@.amount");
 
-        assertThat(json.write(cashCard)).extractingJsonPathNumberValue("@.amount")
+        assertThat(json.write(cashCard))
+                .extractingJsonPathNumberValue("@.amount")
                 .isEqualTo(123.45);
 
     }
@@ -68,7 +73,8 @@ class CashCardJsonTest {
 
     @Test
     void cashCardListSerialization() throws IOException {
-        assertThat(jsonList.write(cashCards)).isStrictlyEqualToJson(new File("src/test/resources/list.json"));
+        assertThat(jsonList.write(cashCards))
+                .isStrictlyEqualToJson(new File("src/test/resources/list.json"));
     }
 
     @Test
