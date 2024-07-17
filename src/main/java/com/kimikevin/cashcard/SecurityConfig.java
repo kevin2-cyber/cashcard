@@ -48,7 +48,7 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(sarah, hankOwnsNoCards, kumar);
     }
 
-    @Bean
+   @Bean
    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
