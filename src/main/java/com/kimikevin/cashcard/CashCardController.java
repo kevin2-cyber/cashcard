@@ -22,7 +22,8 @@ public class CashCardController {
     }
 
     @GetMapping
-    private ResponseEntity<List<CashCard>> findAll(Pageable pageable, Principal principal) {
+    private ResponseEntity<List<CashCard>> findAll(Pageable pageable,
+                                                   Principal principal) {
         Page<CashCard> page = cashCardRepository.findByOwner(
                 principal.getName(),
                 PageRequest.of(
@@ -34,7 +35,8 @@ public class CashCardController {
     }
 
     @GetMapping("/{requestedId}")
-    private ResponseEntity<CashCard> findById(@PathVariable Long requestedId, Principal principal) {
+    private ResponseEntity<CashCard> findById(@PathVariable Long requestedId,
+                                              Principal principal) {
         CashCard cashCard = findCashCard(requestedId, principal);
         if (cashCard != null) {
             return ResponseEntity.ok(cashCard);
@@ -44,7 +46,9 @@ public class CashCardController {
     }
 
     @PostMapping
-    private ResponseEntity<Void> createCashCard(@RequestBody CashCard newCashCardRequest, UriComponentsBuilder ucb, Principal principal) {
+    private ResponseEntity<Void> createCashCard(@RequestBody CashCard newCashCardRequest,
+                                                UriComponentsBuilder ucb,
+                                                Principal principal) {
         CashCard cashCardWithOwner = new CashCard(null, newCashCardRequest.amount(), principal.getName());
         CashCard savedCashCard = cashCardRepository.save(cashCardWithOwner);
         URI locationOfNewCashCard = ucb
@@ -68,7 +72,8 @@ public class CashCardController {
     }
 
     @DeleteMapping("/{id}")
-    private ResponseEntity<Void> deleteCashCard(@PathVariable Long id, Principal principal) {
+    private ResponseEntity<Void> deleteCashCard(@PathVariable Long id,
+                                                Principal principal) {
         if (cashCardRepository.existsByIdAndOwner(id, principal.getName())) {
             cashCardRepository.deleteById(id);
             return ResponseEntity.noContent().build();
@@ -76,7 +81,9 @@ public class CashCardController {
         return ResponseEntity.notFound().build();
     }
 
-    private CashCard findCashCard(Long requestedId, Principal principal) {
-        return cashCardRepository.findByIdAndOwner(requestedId, principal.getName());
+    private CashCard findCashCard(Long requestedId,
+                                  Principal principal) {
+        return cashCardRepository
+                .findByIdAndOwner(requestedId, principal.getName());
     }
 }

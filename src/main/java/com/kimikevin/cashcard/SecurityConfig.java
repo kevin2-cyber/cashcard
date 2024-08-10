@@ -1,5 +1,6 @@
 package com.kimikevin.cashcard;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -12,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import java.util.List;
 
 @Configuration
 public class SecurityConfig {
@@ -51,5 +54,15 @@ public class SecurityConfig {
    @Bean
    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    CommandLineRunner commandLineRunner(CashCardRepository cashCardRepository) {
+        return args -> {
+            CashCard sarah = new CashCard(null, 2.41, "sarah1");
+            CashCard kumar2 = new CashCard(null, 2.41, "kumar2");
+            CashCard cashCard = new CashCard(null, 2.41, "sarah1");
+            cashCardRepository.saveAll(List.of(sarah, kumar2, cashCard));
+        };
     }
 }
